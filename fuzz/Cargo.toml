@@ -24,3 +24,6 @@ name = "insert_and_match"
 path = "fuzz_targets/insert_and_match.rs"
 test = false
 doc = false
+
+[profile.release]
+debug = true
