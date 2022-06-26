@@ -1,21 +1,21 @@
 #![no_main]
 use libfuzzer_sys::fuzz_target;
 
-fuzz_target!(|data: (Vec<(String, i32)>, String, Option<bool>)| {
-    let mut matcher = matchit::Node::new();
+fuzz_target!(|data: (Vec<(&str, u8)>, Vec<&str>)| {
+    let (tree, paths) = data;
 
-    for (key, item) in data.0 {
-        if matcher.insert(key, item).is_err() {
-            return;
-        }
+    let mut matcher = matchit::Router::new();
+
+    for (key, item) in tree {
+        let _ = matcher.insert(key, item);
     }
 
-    match data.2 {
-        None => {
-            let _ = matcher.at(&data.1);
+    for path in paths {
+        if let Ok(m) = matcher.at(&path) {
+            let _ = m.params.len();
+            let _ = m.params.get("x");
+            let _ = m.params.get("y");
         }
-        Some(b) => {
-            let _ = matcher.path_ignore_case(&data.1, b);
-        }
+        let _ = matcher.fix_path(&path);
     }
 });
