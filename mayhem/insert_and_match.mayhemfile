@@ -1,0 +1,7 @@
+project: matchit
+target: insert-and-match
+
+cmds:
+  - cmd: /insert_and_match
+  - cmd: /insert_and_match_no_inst @@
+    libfuzzer: false
