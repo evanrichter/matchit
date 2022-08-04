@@ -16,6 +16,5 @@ fuzz_target!(|data: (Vec<(&str, u8)>, Vec<&str>)| {
             let _ = m.params.get("x");
             let _ = m.params.get("y");
         }
-        let _ = matcher.fix_path(&path);
     }
 });
